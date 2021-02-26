@@ -3,7 +3,7 @@ export class WebFakeStorage {
     console.log('set called with ', opts);
   }
 
-  async get(opts:{key: string}): Promise<{value:string}> {
-    return {value:'monkey'};
+  async get(opts: { key: string }): Promise<{ value: string }> {
+    return { value: 'monkey' };
   }
 }
