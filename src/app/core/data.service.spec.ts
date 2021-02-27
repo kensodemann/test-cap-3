@@ -1,3 +1,4 @@
+import '@capacitor/core';
 import { TestBed } from '@angular/core/testing';
 import { DataService } from './data.service';
 import { FakeStorage } from './fake-storage';
@@ -35,8 +36,15 @@ describe('DataService', () => {
     it('can be spied upon', async () => {
       spyOn(Storage, 'get').and.returnValue(Promise.resolve({ value: 'abides' }));
       expect(await Storage.get({ key: 'dude' })).toEqual({ value: 'abides' });
-      // expect(Storage.get).toHaveBeenCalledTimes(1);
-      // expect(Storage.get).toHaveBeenCalledWith({ key: 'dude' });
+      expect(Storage.get).toHaveBeenCalledTimes(1);
+      expect(Storage.get).toHaveBeenCalledWith({ key: 'dude' });
+    });
+
+    it('works when called in service under test', async () => {
+      spyOn(Storage, 'get').and.returnValue(Promise.resolve({ value: 'dumpster' }));
+      expect(await service.callCapStorage()).toEqual({ value: 'dumpster' });
+      expect(Storage.get).toHaveBeenCalledTimes(1);
+      expect(Storage.get).toHaveBeenCalledWith({ key: 'flaming' });
     });
   });
 });
